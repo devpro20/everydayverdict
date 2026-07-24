@@ -2,8 +2,43 @@ import { prisma } from '@/lib/prisma'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import PostCard from '@/components/PostCard'
+import type { Metadata, ResolvingMetadata } from 'next'
 
 export const revalidate = 60
+
+export async function generateMetadata(
+  { params }: { params: { slug: string } },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const { slug } = await params
+  const category = await prisma.category.findUnique({
+    where: { slug },
+  })
+
+  if (!category) {
+    return {
+      title: 'Category Not Found',
+    }
+  }
+
+  const title = `${category.name} Reviews & News`
+  const description = `Browsing all posts in the ${category.name} category. Discover ideas, tutorials, and insights.`
+
+  return {
+    title: title,
+    description: description,
+    openGraph: {
+      title: title,
+      description: description,
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary',
+      title: title,
+      description: description,
+    },
+  }
+}
 
 export default async function CategoryPage({ params }: { params: { slug: string } }) {
   const { slug } = await params

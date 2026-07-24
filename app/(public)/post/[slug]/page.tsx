@@ -2,8 +2,48 @@ import { prisma } from '@/lib/prisma'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
+import ReactMarkdown from 'react-markdown'
+import type { Metadata, ResolvingMetadata } from 'next'
 
 export const revalidate = 60
+
+export async function generateMetadata(
+  { params }: { params: { slug: string } },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const { slug } = await params
+  const post = await prisma.post.findUnique({
+    where: { slug },
+  })
+
+  if (!post) {
+    return {
+      title: 'Post Not Found',
+    }
+  }
+
+  // Use the first 150 chars of content for description if available
+  const cleanContent = post.content.replace(/[#*`_]/g, '').slice(0, 150) + '...';
+
+  return {
+    title: post.title,
+    description: cleanContent,
+    openGraph: {
+      title: post.title,
+      description: cleanContent,
+      images: [post.thumbnail],
+      type: 'article',
+      publishedTime: post.createdAt.toISOString(),
+      modifiedTime: post.createdAt.toISOString(),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: cleanContent,
+      images: [post.thumbnail],
+    },
+  }
+}
 
 export default async function PostPage({ params }: { params: { slug: string } }) {
   const { slug } = await params
@@ -57,8 +97,8 @@ export default async function PostPage({ params }: { params: { slug: string } })
         </div>
         
         <div className="p-8 md:p-12 lg:px-16 lg:py-14 bg-white dark:bg-slate-900">
-          <div className="prose prose-lg dark:prose-invert prose-brand max-w-none text-slate-700 dark:text-slate-300 prose-headings:font-bold prose-headings:tracking-tight prose-a:text-brand-600 dark:prose-a:text-brand-400 hover:prose-a:text-brand-500 whitespace-pre-wrap leading-relaxed">
-            {post.content}
+          <div className="prose prose-lg dark:prose-invert prose-brand max-w-none text-slate-700 dark:text-slate-300 prose-headings:font-bold prose-headings:tracking-tight prose-a:text-brand-600 dark:prose-a:text-brand-400 hover:prose-a:text-brand-500 leading-relaxed">
+            <ReactMarkdown>{post.content}</ReactMarkdown>
           </div>
         </div>
       </article>
