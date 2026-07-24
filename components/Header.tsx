@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { prisma } from '@/lib/prisma'
 
 export default async function Header() {
@@ -11,8 +12,8 @@ export default async function Header() {
     <header className="sticky top-0 z-50 w-full glass border-b border-slate-200/50 dark:border-slate-800/50 shadow-sm">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between max-w-7xl">
         <Link href="/" className="flex items-center gap-2 group">
-          <div className="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-brand-500/20 group-hover:scale-105 group-hover:shadow-brand-500/40 transition-all duration-300">
-            e
+          <div className="relative w-10 h-10 overflow-hidden rounded-lg shadow-lg shadow-brand-500/20 group-hover:scale-105 group-hover:shadow-brand-500/40 transition-all duration-300">
+            <Image src="/logo.png" alt="everydayverdict logo" fill className="object-cover" />
           </div>
           <span className="font-extrabold text-xl tracking-tight text-slate-900 dark:text-white">everydayverdict</span>
         </Link>
