@@ -41,9 +41,11 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         {children}
-        <script
-          type="text/javascript"
-          src="http://classic.avantlink.com/affiliate_app_confirm.php?mode=js&authResponse=65aa09f8938e53d8ba21c74a754afca0441327e8"
+        <div
+          id="avantlink-verification"
+          dangerouslySetInnerHTML={{
+            __html: `<script type="text/javascript" src="http://classic.avantlink.com/affiliate_app_confirm.php?mode=js&authResponse=65aa09f8938e53d8ba21c74a754afca0441327e8"></script>`
+          }}
         />
       </body>
     </html>
