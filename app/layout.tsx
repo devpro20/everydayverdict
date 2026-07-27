@@ -39,7 +39,13 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <script
+          type="text/javascript"
+          src="http://classic.avantlink.com/affiliate_app_confirm.php?mode=js&authResponse=65aa09f8938e53d8ba21c74a754afca0441327e8"
+        />
+      </body>
     </html>
   );
 }
