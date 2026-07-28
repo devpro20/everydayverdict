@@ -14,7 +14,7 @@ export default function Hero() {
         </h1>
 
         <p className="text-lg md:text-2xl text-slate-300 mb-10 max-w-2xl mx-auto font-light leading-relaxed">
-          Exploring the latest in web development, AI, and software engineering. Join me on this journey of continuous learning.
+          Helping readers choose the best tech products through in-depth reviews and buying guides.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
