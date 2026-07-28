@@ -39,6 +39,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} h-full antialiased`}>
+      <head>
+        <div
+          id="impact-site-verification"
+          dangerouslySetInnerHTML={{
+            __html: `<meta name="impact-site-verification" value="3e887278-81c6-44f3-964e-13f681679c53">`,
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col">
         {children}
         <div
